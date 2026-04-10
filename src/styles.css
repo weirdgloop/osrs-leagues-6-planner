@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+
+body {
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "PT Serif", serif;
+}
+
+.effect-container + .effect-container {
+    @apply border-t-0;
+}
+
+.effect-container:last-child {
+    @apply border-b-0;
+}
