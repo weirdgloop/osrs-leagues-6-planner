@@ -12,12 +12,12 @@ const SearchBox = observer(() => {
       <div className="w-full px-4 p-2 flex items-center gap-2">
         <input
           type="text"
-          className="form-control rounded flex-2"
+          className="form-control rounded flex-3"
           value={store.searchQuery}
           placeholder="Search pact descriptions..."
           onChange={(e) => (store.searchQuery = e.target.value)}
         />
-        <div className="flex-1 text-right text-sm">
+        <div className="flex-2 text-right text-sm">
           {store.searchQuery &&
             (store.nodesMatchingSearch.size > 0
               ? `${store.nodesMatchingSearch.size} highlighted`
