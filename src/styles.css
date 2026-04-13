@@ -2,6 +2,22 @@
 
 @plugin "@tailwindcss/typography";
 
+@theme {
+    --color-dark-100: '#b79d7e'; /* @portage */
+    --color-dark-200: '#736559'; /* @waikawa-grey */
+    --color-dark-300: '#3e362f'; /* @pickled-bluewood */
+    --color-dark-400: '#312a25'; /* @cloud-burst */
+    --color-dark-500: '#28221d'; /* @big-stone */
+    --color-dark-600: '#1b1612'; /* @dark-body */
+    --color-dark-700: '#98a2b6';
+
+    --color-body-100: '#e2dbc8';
+    --color-body-200: '#d8ccb4';
+    --color-body-300: '#d0bd97';
+    --color-body-400: '#b8a282';
+    --color-body-500: '#94866d';
+}
+
 body {
     font-family: 'IBM Plex Sans', sans-serif;
 }
@@ -16,4 +32,39 @@ h1, h2, h3, h4, h5, h6 {
 
 .effect-container:last-child {
     @apply border-b-0;
+}
+
+.form-control {
+    /*@apply bg-body-100;*/
+    @apply dark:bg-dark-200;
+    @apply dark:text-gray-300;
+    @apply border-body-400;
+    @apply dark:border-dark-400;
+    @apply border;
+    @apply text-sm;
+    @apply rounded;
+    padding: .25em .5em;
+    transition: background-color 0.25s, color 0.25s, border 0.25s;
+}
+
+.form-control::placeholder {
+    @apply dark:text-gray-300;
+}
+
+.form-control[type=number] {
+    @apply font-mono;
+}
+
+.form-control:invalid {
+    @apply bg-red-100;
+    @apply dark:bg-red-400;
+    @apply text-red-400;
+    @apply dark:bg-red-200;
+    @apply border-red-400;
+}
+
+.form-control:disabled {
+    @apply bg-gray-200;
+    @apply cursor-not-allowed;
+    @apply opacity-50;
 }
