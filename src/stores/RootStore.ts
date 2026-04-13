@@ -37,6 +37,7 @@ export class RootStore {
   selectedNodeIds = new Set<string>([rootNode.id]);
   hoveredNodeId: string | null = null;
   loadedFromUrl = false;
+  searchQuery = "";
 
   constructor() {
     makeAutoObservable(this);
@@ -208,6 +209,19 @@ export class RootStore {
       }
     }
     return effects;
+  }
+
+  get nodesMatchingSearch(): Set<string> {
+    if (!this.searchQuery) {
+      return new Set();
+    }
+    return new Set(
+      Object.keys(dbrow_definitions).filter((id) =>
+        dbrow_definitions[id].name
+          ?.toLowerCase()
+          .includes(this.searchQuery.toLowerCase()),
+      ),
+    );
   }
 }
 

@@ -1,9 +1,9 @@
 import {
   Handle,
-  Position,
   type Node,
   type NodeProps,
   NodeToolbar,
+  Position,
 } from "@xyflow/react";
 import { JSONify } from "#/components/JSONify.tsx";
 import { clsx } from "clsx";
@@ -83,6 +83,9 @@ export const SkillTreeNode = observer(
     const isHovered = store.hoveredNodeId === id;
 
     const size = nodeSizeToPx[data.skillTreeNodeInfo.node_size];
+    const isMatchingSearch = store.nodesMatchingSearch.has(
+      data.skillTreeNodeInfo.row_id,
+    );
 
     return (
       <div>
@@ -119,6 +122,12 @@ export const SkillTreeNode = observer(
             )})`,
           }}
         >
+          {isMatchingSearch && (
+            <div
+              className="absolute inset-0 bg-green-500/50 -z-10 scale-90 rotate-45"
+              aria-hidden="true"
+            />
+          )}
           <img
             className="size-4/6 object-center object-contain"
             src={getSpriteTile(
