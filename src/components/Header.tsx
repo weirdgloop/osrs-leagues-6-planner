@@ -6,23 +6,6 @@ import PactsSpent from "#/components/PactsSpent.tsx";
 
 const Header = observer(() => {
   const store = useStore();
-  const node_scale_slider = (
-    <div className="flex items-center gap-2">
-      <label htmlFor="scale-slider" className="text-sm font-medium">
-        Node scale: {store.scale.toFixed(1)}
-      </label>
-      <input
-        id="scale-slider"
-        type="range"
-        min="0.20"
-        max="4"
-        step="0.1"
-        value={store.scale}
-        onChange={(e) => store.setScale(parseFloat(e.target.value))}
-        className="h-2 w-24 cursor-pointer appearance-none rounded-lg bg-gray-200 dark:bg-gray-700"
-      />
-    </div>
-  );
   return (
     <header className="sticky top-0 z-50 border-b-4 px-4 backdrop-blur-lg bg-[#28221d] border-b-[#736559] text-white">
       <nav className="flex flex-wrap items-center gap-x-3 gap-y-2 py-1 px-3 justify-between">
@@ -36,7 +19,6 @@ const Header = observer(() => {
         </div>
         <div className="flex items-center gap-4 text-sm">
           <PactsSpent />
-          {debuggingEnabled ? node_scale_slider : null}
           <a
             href="https://tools.runescape.wiki/osrs-dps/"
             target="_blank"

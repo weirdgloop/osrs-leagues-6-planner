@@ -36,7 +36,6 @@ export const initialEdges: Edge[] = Array.from(
 export class RootStore {
   selectedNodeIds = new Set<string>([rootNode.id]);
   hoveredNodeId: string | null = null;
-  scale = 1.0;
   loadedFromUrl = false;
 
   constructor() {
@@ -56,10 +55,6 @@ export class RootStore {
       }
     }
     return reachable;
-  }
-
-  setScale(scale: number) {
-    this.scale = scale;
   }
 
   setSelectedNodes(ids: string[], fromUrl = false) {

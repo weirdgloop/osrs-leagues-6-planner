@@ -82,7 +82,7 @@ export const SkillTreeNode = observer(
     const isShiftPressed = useKeyPressed("Shift");
     const isHovered = store.hoveredNodeId === id;
 
-    const size = nodeSizeToPx[data.skillTreeNodeInfo.node_size] * store.scale;
+    const size = nodeSizeToPx[data.skillTreeNodeInfo.node_size];
 
     return (
       <div>
