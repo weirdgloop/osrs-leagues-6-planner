@@ -215,11 +215,19 @@ export class RootStore {
     if (!this.searchQuery) {
       return new Set();
     }
+
+    const normalize = (text: string) =>
+    text
+      .replace(/<col=[^>]+>(.*?)<\/col>/gi, "$1")
+      .replace(/\s+/g, " ")
+      .trim()
+      .toLowerCase();
+
+    const query = normalize(this.searchQuery);
+
     return new Set(
       Object.keys(dbrow_definitions).filter((id) =>
-        dbrow_definitions[id].name
-          ?.toLowerCase()
-          .includes(this.searchQuery.toLowerCase()),
+        normalize(dbrow_definitions[id].name ?? "").includes(query),
       ),
     );
   }
