@@ -1,4 +1,5 @@
 import { observer } from "mobx-react-lite";
+import { useCallback } from "react";
 import { get_backing_icon } from "#/skill_tree/icons";
 import { dbrow_definitions } from "#/skill_tree/parse_skill_tree_elements";
 import { useStore } from "#/stores/StoreContext.tsx";
@@ -6,6 +7,16 @@ import { getSpriteTile } from "./flow/SkillTreeNode";
 
 const SearchBox = observer(() => {
   const store = useStore();
+
+  const onOrderMouseEnter = useCallback(
+    (id: string) =>
+      store.setHoveredOrderId(id),
+    [store],
+  );
+  const onOrderMouseLeave = useCallback(
+    () => store.setHoveredOrderId(null),
+    [store],
+  );
 
   return (
     <div className="flex flex-col w-full">
@@ -42,8 +53,8 @@ const SearchBox = observer(() => {
                   <li
                     key={id}
                     className="p-2 border-b border-[#806f61] flex gap-2 items-center"
-                    onMouseEnter={() => (store.setHoveredOrderId(id))}
-                    onMouseLeave={() => (store.setHoveredOrderId(null))}
+                    onMouseEnter={() => onOrderMouseEnter(id)}
+                    onMouseLeave={onOrderMouseLeave}
                   >
                     <div
                       className="bg-cover size-8 square min-size-12 aspect-square flex items-center justify-center"
