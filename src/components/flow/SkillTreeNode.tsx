@@ -123,7 +123,7 @@ export const SkillTreeNode = observer(
             )})`,
           }}
         >
-          {isMatchingSearch || isHoveredInOrder && (
+          {(isMatchingSearch || isHoveredInOrder) && (
             <div
               className="absolute inset-0 bg-green-500/50 -z-10 scale-90 rotate-45"
               aria-hidden="true"
