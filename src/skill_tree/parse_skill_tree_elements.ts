@@ -16,10 +16,9 @@ export interface SkillTreeNodeInfo {
   node_size: NodeSize;
   effect: {
     name: string;
-    value: number | "[Constant: true]";
+    value: number;
   };
   node_type?: string;
-  node_sprite: string;
   linked_nodes: string[];
 }
 

@@ -1,11 +1,8 @@
-import { useStore } from "#/stores/StoreContext";
 import { observer } from "mobx-react-lite";
 import wiki from "./wiki.svg";
-import { debuggingEnabled } from "#/components/debugging.tsx";
 import PactsSpent from "#/components/PactsSpent.tsx";
 
 const Header = observer(() => {
-  const store = useStore();
   return (
     <header className="sticky top-0 z-50 border-b-4 px-4 backdrop-blur-lg bg-[#28221d] border-b-[#736559] text-white">
       <nav className="flex flex-wrap items-center gap-x-3 gap-y-2 py-1 px-3 justify-between">

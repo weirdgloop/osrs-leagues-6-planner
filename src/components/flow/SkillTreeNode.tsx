@@ -40,7 +40,7 @@ export const DisplayEffect = ({
   effect_value,
 }: {
   name: string;
-  effect_value: number | "[Constant: true]";
+  effect_value: number;
 }) => {
   const text = name.replaceAll("#", String(effect_value));
 

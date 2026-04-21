@@ -179,14 +179,14 @@ export class RootStore {
     string,
     {
       skillTreeNodeInfo: SkillTreeNodeInfo;
-      values: (number | "[Constant: true]")[];
+      values: number[];
     }
   > {
     const effects = new Map<
       string,
       {
         skillTreeNodeInfo: SkillTreeNodeInfo;
-        values: (number | "[Constant: true]")[];
+        values: number[];
       }
     >();
     for (const id of this.selectedNodeIds) {

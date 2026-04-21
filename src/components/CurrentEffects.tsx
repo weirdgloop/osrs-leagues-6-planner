@@ -6,13 +6,8 @@ import {
   getSpriteTile,
 } from "#/components/flow/SkillTreeNode.tsx";
 
-const combineEffectValues = (values: (number | "[Constant: true]")[]) => {
-  return values.reduce((acc, value) => {
-    if (value === "[Constant: true]" || acc === "[Constant: true]") {
-      return "[Constant: true]";
-    }
-    return acc + value;
-  }, 0);
+const combineEffectValues = (values: number[]) => {
+  return values.reduce((acc, value) => acc + value, 0);
 };
 
 const CurrentEffects = observer(() => {
