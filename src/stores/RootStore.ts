@@ -175,7 +175,7 @@ export class RootStore {
     return this.getNodesToSelect(this.hoveredNodeId);
   }
 
-  currentEffects(): Map<
+  get currentEffects(): Map<
     string,
     {
       skillTreeNodeInfo: SkillTreeNodeInfo;

@@ -37,12 +37,18 @@ const nodeSizeToPx: { [key in NodeSize]: number } = {
 
 export const DisplayEffect = ({
   name,
-  effect_value,
+  effectValue,
+    extraNote,
 }: {
   name: string;
-  effect_value: number;
+  effectValue: number;
+    extraNote: string | null;
 }) => {
-  const text = name.replaceAll("#", String(effect_value));
+    let text = name.replaceAll('#', String(effectValue));
+
+    if (name.includes('+10% accuracy in all combat styles')) {
+        text = text.replaceAll('+10% accuracy in all combat styles', `+${effectValue * 10}% accuracy in all combat styles`);
+    }
 
   const parts = text.split(/(<col=[^>]+>.*?<\/col>)/g);
 
@@ -59,6 +65,12 @@ export const DisplayEffect = ({
         }
         return part;
       })}
+        {extraNote && (
+            <div className="text-xs italic text-gray-500 dark:text-gray-300">
+                <br />
+                {extraNote}
+            </div>
+        )}
     </div>
   );
 };
@@ -97,7 +109,8 @@ export const SkillTreeNode = observer(
         >
           <DisplayEffect
             name={data.skillTreeNodeInfo.name}
-            effect_value={data.skillTreeNodeInfo.effect.value}
+            effectValue={data.skillTreeNodeInfo.effect.value}
+            extraNote={null}
           />
 
           {debuggingEnabled && (
