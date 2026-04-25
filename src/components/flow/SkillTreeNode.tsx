@@ -5,18 +5,18 @@ import {
   NodeToolbar,
   Position,
 } from "@xyflow/react";
-import { JSONify } from "#/components/JSONify.tsx";
 import { clsx } from "clsx";
+import { observer } from "mobx-react-lite";
+import { debuggingEnabled } from "#/components/debugging.tsx";
+import { JSONify } from "#/components/JSONify.tsx";
+import { useKeyPressed } from "#/components/useKeyPressed.tsx";
+import spriteTiles from "#/skill_tree/icons/sprite_tiles.ts";
+import { get_backing_icon, rowIdToTileInfo } from "#/skill_tree/icons.ts";
 import {
   NodeSize,
   type SkillTreeNodeInfo,
 } from "#/skill_tree/parse_skill_tree_elements.ts";
 import { useStore } from "#/stores/StoreContext.tsx";
-import { observer } from "mobx-react-lite";
-import { useKeyPressed } from "#/components/useKeyPressed.tsx";
-import { get_backing_icon, rowIdToTileInfo } from "#/skill_tree/icons.ts";
-import spriteTiles from "#/skill_tree/icons/sprite_tiles.ts";
-import { debuggingEnabled } from "#/components/debugging.tsx";
 
 export type SkillTreeNodeDisplay = Node<
   { id: string; skillTreeNodeInfo: SkillTreeNodeInfo },
@@ -98,6 +98,7 @@ export const SkillTreeNode = observer(
     const isMatchingSearch = store.nodesMatchingSearch.has(
       data.skillTreeNodeInfo.row_id,
     );
+    const isHoveredInOrder = store.hoveredNodeOrderId === id;
 
     return (
       <div>
@@ -135,7 +136,7 @@ export const SkillTreeNode = observer(
             )})`,
           }}
         >
-          {isMatchingSearch && (
+          {(isMatchingSearch || isHoveredInOrder) && (
             <div
               className="absolute inset-0 bg-green-500/50 -z-10 scale-90 rotate-45"
               aria-hidden="true"
