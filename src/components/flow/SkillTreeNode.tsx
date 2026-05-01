@@ -35,20 +35,29 @@ const nodeSizeToPx: { [key in NodeSize]: number } = {
   node_capstone: 60,
 };
 
+const nodeSizeToIconScaleClass: { [key in NodeSize]: string } = {
+  node_minor: "size-1/2",
+  node_major: "size-4/6",
+  node_capstone: "size-4/6",
+};
+
 export const DisplayEffect = ({
   name,
   effectValue,
-    extraNote,
+  extraNote,
 }: {
   name: string;
   effectValue: number;
-    extraNote: string | null;
+  extraNote: string | null;
 }) => {
-    let text = name.replaceAll('#', String(effectValue));
+  let text = name.replaceAll("#", String(effectValue));
 
-    if (name.includes('+10% accuracy in all combat styles')) {
-        text = text.replaceAll('+10% accuracy in all combat styles', `+${effectValue * 10}% accuracy in all combat styles`);
-    }
+  if (name.includes("+10% accuracy in all combat styles")) {
+    text = text.replaceAll(
+      "+10% accuracy in all combat styles",
+      `+${effectValue * 10}% accuracy in all combat styles`,
+    );
+  }
 
   const parts = text.split(/(<col=[^>]+>.*?<\/col>)/g);
 
@@ -65,26 +74,21 @@ export const DisplayEffect = ({
         }
         return part;
       })}
-        {extraNote && (
-            <div className="text-xs italic text-gray-500 dark:text-gray-300">
-                <br />
-                {extraNote}
-            </div>
-        )}
+      {extraNote && (
+        <div className="text-xs italic text-gray-500 dark:text-gray-300">
+          <br />
+          {extraNote}
+        </div>
+      )}
     </div>
   );
 };
 
 export const getSpriteTile = (row_id: string, selected: boolean) => {
   const active_inactive = selected ? "active" : "inactive";
-  if (row_id in rowIdToTileInfo) {
-    const { tileset, index } = rowIdToTileInfo[row_id];
-    return spriteTiles[
-      `league_6_combat_mastery_${tileset}_${active_inactive}_large,${index}`
-    ];
-  }
+  const { tileset, index, size } = rowIdToTileInfo[row_id];
   return spriteTiles[
-    `league_6_combat_mastery_generic_${active_inactive}_large,9`
+    `league_6_combat_mastery_${tileset}_${active_inactive}_${size},${index}`
   ];
 };
 
@@ -95,6 +99,8 @@ export const SkillTreeNode = observer(
     const isHovered = store.hoveredNodeId === id;
 
     const size = nodeSizeToPx[data.skillTreeNodeInfo.node_size];
+    const iconScaleClass =
+      nodeSizeToIconScaleClass[data.skillTreeNodeInfo.node_size];
     const isMatchingSearch = store.nodesMatchingSearch.has(
       data.skillTreeNodeInfo.row_id,
     );
@@ -142,7 +148,7 @@ export const SkillTreeNode = observer(
             />
           )}
           <img
-            className="size-4/6 object-center object-contain"
+            className={clsx("object-center object-contain", iconScaleClass)}
             src={getSpriteTile(
               data.skillTreeNodeInfo.row_id,
               store.isNodeSelected(id),

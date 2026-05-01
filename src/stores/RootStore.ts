@@ -217,11 +217,11 @@ export class RootStore {
     }
 
     const normalize = (text: string) =>
-    text
-      .replace(/<col=[^>]+>(.*?)<\/col>/gi, "$1")
-      .replace(/\s+/g, " ")
-      .trim()
-      .toLowerCase();
+      text
+        .replace(/<col=[^>]+>(.*?)<\/col>/gi, "$1")
+        .replace(/\s+/g, " ")
+        .trim()
+        .toLowerCase();
 
     const query = normalize(this.searchQuery);
 
