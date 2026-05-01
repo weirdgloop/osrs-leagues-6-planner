@@ -1,5 +1,4 @@
-import magic from "./icons_old/magic.png";
-import ranged from "./icons_old/ranged.png";
+
 import { NodeSize } from "#/skill_tree/parse_skill_tree_elements.ts";
 import spriteTiles from "#/skill_tree/icons/sprite_tiles.ts";
 
@@ -30,11 +29,6 @@ export const get_backing_icon = (
 
   return spriteTiles[`${tileset},${variant}`];
 };
-
-export const skills = new Map<string, string>([
-  ["^magic", magic],
-  ["^ranged", ranged],
-]);
 
 export const rowIdToTileInfo: Record<
   string,
