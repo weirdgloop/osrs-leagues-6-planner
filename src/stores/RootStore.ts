@@ -1,5 +1,5 @@
-import { makeAutoObservable } from "mobx";
 import type { Edge, Node } from "@xyflow/react";
+import { makeAutoObservable } from "mobx";
 import {
   dbrow_definitions,
   type SkillTreeNodeInfo,
@@ -38,6 +38,7 @@ export class RootStore {
   hoveredNodeId: string | null = null;
   loadedFromUrl = false;
   searchQuery = "";
+  hoveredNodeOrderId: string | null = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -65,6 +66,10 @@ export class RootStore {
 
   setHoveredNode(id: string | null) {
     this.hoveredNodeId = id;
+  }
+
+  setHoveredOrderId(id: string | null) {
+    this.hoveredNodeOrderId = id;
   }
 
   pruneStrandedNodes() {

@@ -1,3 +1,4 @@
+import { useNavigate, useSearch } from "@tanstack/react-router";
 import {
   Background,
   ConnectionMode,
@@ -7,20 +8,19 @@ import {
   useEdgesState,
   useNodesState,
 } from "@xyflow/react";
+import localforage from "localforage";
+import { reaction } from "mobx";
+import { observer } from "mobx-react-lite";
+import { useCallback, useEffect, useMemo } from "react";
+import SkillTreeEdge from "#/components/flow/SkillTreeEdge.tsx";
+import { SkillTreeNode } from "#/components/flow/SkillTreeNode.tsx";
+import { useKeyPressed } from "#/components/useKeyPressed.tsx";
 import {
   getDisplayId,
   getNodeIdFromDisplay,
 } from "#/skill_tree/parse_skill_tree_elements.ts";
-import { SkillTreeNode } from "#/components/flow/SkillTreeNode.tsx";
-import { reaction } from "mobx";
-import { observer } from "mobx-react-lite";
-import { useStore } from "#/stores/StoreContext.tsx";
-import SkillTreeEdge from "#/components/flow/SkillTreeEdge.tsx";
-import { useKeyPressed } from "#/components/useKeyPressed.tsx";
-import { useCallback, useEffect, useMemo } from "react";
-import { useNavigate, useSearch } from "@tanstack/react-router";
 import { initialEdges, initialNodes } from "#/stores/RootStore.ts";
-import localforage from "localforage";
+import { useStore } from "#/stores/StoreContext.tsx";
 
 const nodeTypes = { skillTreeNode: SkillTreeNode };
 const edgeTypes = { skillTreeEdge: SkillTreeEdge };
@@ -33,13 +33,12 @@ const SkillTreeDisplay = observer(() => {
 
   // Sync URL to Store (initial load and browser navigation)
   useEffect(() => {
-    const storeNodeIds = Array.from(store.selectedNodeIds).sort();
+    const storeNodeIds = Array.from(store.selectedNodeIds);
 
     if (n) {
       // load from url
       const urlNodeIds = (n?.split("-").filter(Boolean) || [])
         .map(getNodeIdFromDisplay)
-        .sort();
 
       if (urlNodeIds.length === 0) {
         return; // no-op, use default from store
@@ -56,7 +55,6 @@ const SkillTreeDisplay = observer(() => {
           if (selectedNodes) {
             const nodeIds = ((selectedNodes as string[]).filter(Boolean) || [])
               .map(getNodeIdFromDisplay)
-              .sort();
 
             if (JSON.stringify(storeNodeIds) !== JSON.stringify(nodeIds)) {
               store.setSelectedNodes(nodeIds);
@@ -70,7 +68,7 @@ const SkillTreeDisplay = observer(() => {
   useEffect(
     () =>
       reaction(
-        () => Array.from(store.selectedNodeIds).sort(),
+        () => Array.from(store.selectedNodeIds),
         async (storeNodeIds) => {
           if (!store.loadedFromUrl) {
             await localforage.setItem("demonicpacts-nodes", storeNodeIds);
@@ -78,7 +76,6 @@ const SkillTreeDisplay = observer(() => {
 
           const urlNodeIds = (n?.split("-").filter(Boolean) || [])
             .map(getNodeIdFromDisplay)
-            .sort();
 
           if (JSON.stringify(storeNodeIds) !== JSON.stringify(urlNodeIds)) {
             const displayIds = storeNodeIds.map(getDisplayId);
